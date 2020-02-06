@@ -1,6 +1,7 @@
 # Toy Implementation of NTRU Crypto Systems
 
 [![Build Status](https://travis-ci.org/nils-wisiol/ntru.svg?branch=master)](https://travis-ci.org/nils-wisiol/ntru)
+[![Build Status](https://codecov.io/gh/nils-wisiol/ntru/branch/master/graphs/badge.svg)](https://codecov.io/gh/nils-wisiol/ntru/branch/master)
 
 This repository contains a study-toy implementation of the Streamlined NTRU Prime public key crypto system.
 Do not use in production.
