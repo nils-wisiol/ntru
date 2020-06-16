@@ -136,6 +136,14 @@ class StreamlinedNTRUPrime:
         return h, (f, g_r3_inv)
 
     def encrypt(self, plain_text: Poly, public_key: Poly):
+        """
+        >>> cipher = StreamlinedNTRUPrime(23, 113, 5, seed=3141)
+        >>> pk, _ = cipher.generate_keys()
+        >>> m = Poly([0, 1] + 6*[0] + [-1] + 6*[0] + [-1, 1, 0, 0, 0, 0, -1], N=None, modulus=cipher.modulus_r)
+        >>> c = cipher.encrypt(m, pk).coeffs
+        >>> (c / 3 == c // 3).all()
+        True
+        """
         # notation from NIST submission
         r = plain_text
         h = public_key
@@ -144,8 +152,8 @@ class StreamlinedNTRUPrime:
         hr = h.in_ring(N=self.q, modulus=self.modulus_rq) * r.in_ring(N=self.q, modulus=self.modulus_rq)
 
         # Round(h*r)
-        return Poly(around(hr.coeffs * 3) // 3, N=self.q, modulus=self.modulus_rq)
-    
+        return Poly(around(hr.coeffs / 3) * 3, N=None, modulus=self.modulus_rq)
+
     def decrypt(self, cipher_text: Poly, secret_key):
         # notation from NIST submission
         f, v = secret_key
